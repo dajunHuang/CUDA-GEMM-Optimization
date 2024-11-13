@@ -46,6 +46,7 @@ int main()
             // {"Custom GEMM Kernel Tall And Skinny 03",
             // launch_gemm_kernel_tall_and_skinny_03<float>},
             {"Custom GEMM Kernel 04", launch_gemm_kernel_04<float>},
+            {"Custom GEMM Kernel 05", launch_gemm_kernel_05<float>},
         };
 
     for (auto const& gemm_kernel_launch_function : gemm_kernel_launch_functions)

@@ -19,6 +19,7 @@ add_library(
     1d_block_tiling_2d_warp_tiling_matrix_transpose_wmma_tall_and_skinny.cu
     2d_block_tiling_2d_warp_tiling_matrix_transpose_for_A.cu
     06_2d_block_tiling_2d_warp_tiling_2d_thread_tiling_matrix_transpose.cu
+    06_2d_block_tiling_2d_warp_tiling_2d_thread_tiling_matrix_transpose_buffer.cu
 )
 
 # Add the include directory of the library to the include directories of the project
