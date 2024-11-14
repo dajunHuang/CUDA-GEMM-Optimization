@@ -282,7 +282,7 @@ void launch_gemm_kernel_04(size_t m, size_t n, size_t k, T const* alpha,
                             T const* beta, T* C, size_t ldc,
                             cudaStream_t stream)
 {
-    constexpr unsigned int BLOCK_TILE_SIZE_X{128U};
+    constexpr unsigned int BLOCK_TILE_SIZE_X{64U};
     constexpr unsigned int BLOCK_TILE_SIZE_K{32U};
     constexpr unsigned int BLOCK_TILE_SIZE_Y{64U};  // == n
 
@@ -297,14 +297,14 @@ void launch_gemm_kernel_04(size_t m, size_t n, size_t k, T const* alpha,
     static_assert(BLOCK_TILE_SIZE_Y % 32U == 0);
     static_assert(BLOCK_TILE_SIZE_K % 32U == 0);
 
-    constexpr unsigned int WARP_TILE_SIZE_X{64U};
+    constexpr unsigned int WARP_TILE_SIZE_X{32U};
     constexpr unsigned int WARP_TILE_SIZE_Y{32U};   // == n
 
     constexpr unsigned int NUM_THREADS_PER_WARP_X{8U};
     constexpr unsigned int NUM_THREADS_PER_WARP_Y{4U};
     static_assert(NUM_THREADS_PER_WARP_X * NUM_THREADS_PER_WARP_Y == 32U);
 
-    constexpr unsigned int THREAD_TILE_SIZE_X{4U};
+    constexpr unsigned int THREAD_TILE_SIZE_X{2U};
     constexpr unsigned int THREAD_TILE_SIZE_Y{4U};
 
     static_assert(WARP_TILE_SIZE_X % THREAD_TILE_SIZE_X == 0U);
