@@ -14,9 +14,9 @@ int main()
     __half const fp16_tensor_core_abs_tol{__float2half(5.0e-2f)};
     double const fp16_tensor_core_rel_tol{1.0e-1f};
 
-    constexpr size_t m{4096U};
-    constexpr size_t k{4096U};
-    constexpr size_t n{4096U};
+    constexpr size_t m{8192U};
+    constexpr size_t k{8192U};
+    constexpr size_t n{8192U};
 
     constexpr size_t lda{(m + 16U - 1U) / 16U * 16U};
     constexpr size_t ldb{(k + 16U - 1U) / 16U * 16U};
@@ -42,8 +42,7 @@ int main()
                            size_t, __half const*, size_t, __half const*,
                            __half*, size_t, cudaStream_t)>>> const
         gemm_fp16_tensor_core_kernel_launch_functions{
-            {"Custom GEMM Kernel Tall And Skinny 01",
-            launch_gemm_kernel_tall_and_skinny_01<__half>},
+
         };
 
     for (auto const& gemm_fp16_tensor_core_kernel_launch_function :

@@ -166,7 +166,7 @@ bool all_close(T const* C, T const* C_ref, size_t m, size_t n, size_t ldc,
             double const C_ref_val{static_cast<double>(C_ref[i + j * ldc])};
             double const diff{C_val - C_ref_val};
             double const diff_val{std::abs(diff)};
-            if (diff_val >
+            if (isnan(diff_val) || diff_val >
                 std::max(static_cast<double>(abs_tol),
                          static_cast<double>(std::abs(C_ref_val)) * rel_tol))
             {

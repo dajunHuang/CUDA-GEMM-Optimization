@@ -8,11 +8,11 @@ int main(int argc, char *argv[])
 {
     print_device_info();
 
-    constexpr size_t num_repeats{5U};
-    constexpr size_t num_warmups{2U};
+    constexpr size_t num_repeats{1U};
+    constexpr size_t num_warmups{0U};
 
-    float const fp32_abs_tol{1.0e-3f};
-    double const fp32_rel_tol{0.0e-4f};
+    double const fp64_abs_tol{1.0e-4f};
+    double const fp64_rel_tol{0.0e-5f};
 
     size_t m{8192U};
     size_t n{8192U};
@@ -41,22 +41,22 @@ int main(int argc, char *argv[])
     // Define all the GEMM kernel launch functions to be profiled.
     std::vector<std::pair<
         std::string,
-        std::function<void(size_t, size_t, size_t, float const*, float const*,
-                           size_t, float const*, size_t, float const*, float*,
+        std::function<void(size_t, size_t, size_t, double const*, double const*,
+                           size_t, double const*, size_t, double const*, double*,
                            size_t, cudaStream_t)>>> const
         gemm_kernel_launch_functions{
-            {"Custom GEMM Kernel 04", launch_gemm_kernel_04<float>},
-            {"Custom GEMM Kernel 05", launch_gemm_kernel_05<float>},
-            {"Custom GEMM Kernel 07", launch_gemm_kernel_07<float>},
+            // {"Custom GEMM Kernel 04", launch_gemm_kernel_04<double>},
+            // {"Custom GEMM Kernel 07", launch_gemm_kernel_07<double>},
+            {"Custom GEMM Kernel 08", launch_gemm_kernel_08<double>},
         };
 
     for (auto const& gemm_kernel_launch_function : gemm_kernel_launch_functions)
     {
         std::cout << gemm_kernel_launch_function.first << std::endl;
-        std::pair<float, float> const gemm_kernel_profile_result{
-            profile_gemm<float>(
+        std::pair<double, double> const gemm_kernel_profile_result{
+            profile_gemm<double>(
                 m, n, k, lda, ldb, ldc, gemm_kernel_launch_function.second,
-                fp32_abs_tol, fp32_rel_tol, num_repeats, num_warmups)};
+                fp64_abs_tol, fp64_rel_tol, num_repeats, num_warmups)};
         std::cout << std::endl;
     }
 

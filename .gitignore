@@ -4,6 +4,8 @@
 *.ptx
 *.cubin
 *.fatbin
+*.ncu-rep
+*.nsys-rep
 
 # Build files
 build/

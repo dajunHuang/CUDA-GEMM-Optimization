@@ -16,20 +16,24 @@ add_library(
     cuda_gemm 
     SHARED 
     cuda_gemm_utils.cu 
-    1d_block_tiling_2d_warp_tiling_matrix_transpose_wmma_tall_and_skinny.cu
-    2d_block_tiling_2d_warp_tiling_matrix_transpose_for_A.cu
-    06_2d_block_tiling_2d_warp_tiling_2d_thread_tiling_matrix_transpose.cu
-    06_2d_block_tiling_2d_warp_tiling_2d_thread_tiling_matrix_transpose_buffer.cu
+    04_2d_block_tiling_2d_warp_tiling_2d_thread_tiling_matrix_transpose.cu
+    05_2d_block_tiling_2d_warp_tiling_2d_thread_tiling_matrix_transpose_buffer.cu
+    07_cutlass_basic_gemm.cu
+    08_2d_block_tiling_2d_warp_tiling_2d_thread_tiling_matrix_transpose_fp64.cu
 )
 
 # Add the include directory of the library to the include directories of the project
-target_include_directories(cuda_gemm PUBLIC ${CUDA_GEMM_INCLUDE_DIRS})
+target_include_directories(cuda_gemm PUBLIC ${CUDA_GEMM_INCLUDE_DIRS} /home/djhuang/cutlass1/include)
 
 # Set the CUDA architecture to compile the code for
 # https://cmake.org/cmake/help/latest/prop_tgt/CUDA_ARCHITECTURES.html
 set_target_properties(cuda_gemm PROPERTIES CUDA_ARCHITECTURES native)
 install(TARGETS cuda_gemm DESTINATION lib)
 install(FILES ${CUDA_GEMM_HEADERS} DESTINATION include)
+
+add_executable(profile_cuda_gemm_fp64 profile_cuda_gemm_fp64.cu)
+target_link_libraries(profile_cuda_gemm_fp64 cuda_gemm CUDA::cublas)
+set_target_properties(profile_cuda_gemm_fp64 PROPERTIES CUDA_ARCHITECTURES native)
 
 add_executable(profile_cuda_gemm_fp32 profile_cuda_gemm_fp32.cu)
 target_link_libraries(profile_cuda_gemm_fp32 cuda_gemm CUDA::cublas)
